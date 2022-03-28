@@ -4,6 +4,10 @@ from flask import render_template
 
 app = Flask(__name__)
 
+@app.route('/about')
+def about():
+  return render_template("about.html")
+
 #Pirmā lapa, kas tiks ielādēta
 @app.route('/',methods = ['POST', 'GET'])
 def root():
