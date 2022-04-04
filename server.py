@@ -4,6 +4,21 @@ from flask import render_template
 
 app = Flask(__name__)
 
+def loadAllPictures():
+  filepath = 'picDB.txt'
+  pictures=[]
+  with open(filepath) as fp:
+    line = fp.readline()
+    cnt = 1
+    while line:
+      if line!='':
+        fullPicInfo = line.strip().split(';')
+        pictures.append(fullPicInfo[1])
+      line = fp.readline()
+      cnt += 1
+  fp.close()
+  return pictures  
+
 @app.route('/about')
 def about():
   return render_template("about.html")
@@ -16,8 +31,8 @@ def root():
 @app.route('/test',methods = ['POST', 'GET'])
 def test():
   parametri = ["IQ", "Augums", "Kājas izmērs"]
-  return render_template("test.html", parametri=parametri)
-
+  images = loadAllPictures()
+  return render_template("test.html", parametri=parametri,images=images)
 
 #Pārbaudes lapa, lai saprastu, ka kods vispār strādā
 @app.route('/health')
